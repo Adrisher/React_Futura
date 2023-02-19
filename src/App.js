@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+//Importe la libreria para la rutas que voy a utilizar 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DocuPdf from "./components/DocuPdf";
+import Inicio from "./components/Inicio";
+import Personaje from "./components/Personaje";
 
+
+//Coloco el componente browserRouter como padre de todo
+//Dentro un Routes y por cada directorio que vamos a necesitar ponemos route 
+// el primero devuelva los personajes y el otro la imagen
+// En la ruta personaje y con el id nos devuelve un personaje
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="contenedor">
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Inicio></Inicio>}> </Route>
+          <Route path='/personaje/:id' element={<Personaje></Personaje>}> </Route>
+          <Route exact path="/docupdf" component={DocuPdf} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
-
 export default App;
