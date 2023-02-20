@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { allpersonajes } from "../functions/funciones";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import { useNavigate } from 'react-router-dom';
+import PDFGenerador from "./PDFGenerador";
 
 
 //para utilizar esta funcion, con useEffect para cuando cargue el inicio cargue los personajes
 //usestate para mostrar en pantalla 
-const Inicio = () => {
-    const [personajes, setPersonajes] = useState([])
+const Inicio = ({ }) => {
+
+    const [personajes, setPersonajes] = useState(null);
+
     useEffect(() => {
-        allpersonajes(setPersonajes)
+        allpersonajes(setPersonajes);
     }, [])
+
+    const navigate = useNavigate();
+    const confirm = () => {
+        navigate('/pdf');
+    }
+
     return (
         <div className="contenedor">
+            {/* <div>
+                <h1>Tabla de datos</h1>
+                <PDFGenerador data={data} />
+            </div> */}
             <br />
             <div align="center">
-                <a href="./docupdf" target="_blank"><button className="btn btn-danger">PDF</button></a>
+                <button onClick={confirm} className="btn btn-danger" >Descargar PDF</button>
             </div>
+            <br />
             <div align="center">
                 <ReactHTMLTableToExcel
                     id="botonExportarExcel"
@@ -28,22 +43,22 @@ const Inicio = () => {
                 <table className="table table-striped table-bordered table-hover table-dark" id="api">
                     <thead>
                         <tr>
-                            <th className="th-lg"><a>ID</a></th>
-                            <th className="th-lg"><a>Nombre</a></th>
-                            <th className="th-lg"><a>Fecha</a></th>
-                            <th className="th-lg"><a>Episodio</a></th>
-                            <th className="th-lg"><a>Personajes</a></th>
+                            <th className="th-lg"><a href="!#" >ID</a></th>
+                            <th className="th-lg"><a href="!#">Nombre</a></th>
+                            <th className="th-lg"><a href="!#">Fecha</a></th>
+                            <th className="th-lg"><a href="!#">Episodio</a></th>
+                            <th className="th-lg"><a href="!#">Personajes</a></th>
                         </tr>
                     </thead>
                     <tbody>
                         {personajes != null ? (
                             personajes.map((personaje) => (
                                 <tr>
-                                    <th href="#" ><a href={`/personaje/${personaje.id}`}>{personaje.id}</a></th>
-                                    <th href="#">{personaje.name}</th>
-                                    <th href="#">{personaje.air_date}</th>
-                                    <th href="#">{personaje.episode}</th>
-                                    <th href="#">{personaje.characters}</th>
+                                    <th href="!#" ><a href={`/personaje/${personaje.id}`}>{personaje.id}</a></th>
+                                    <th href="!#">{personaje.name}</th>
+                                    <th href="!#">{personaje.air_date}</th>
+                                    <th href="!#">{personaje.episode}</th>
+                                    <th href="!#">{personaje.characters}</th>
                                 </tr>
                             ))
                         ) : ('no hay personajes')}

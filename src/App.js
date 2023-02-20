@@ -1,8 +1,9 @@
 //Importe la libreria para la rutas que voy a utilizar 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import DocuPdf from "./components/DocuPdf";
 import Inicio from "./components/Inicio";
+import Pdf from "./components/Pdf";
 import Personaje from "./components/Personaje";
+
 
 
 //Coloco el componente browserRouter como padre de todo
@@ -16,7 +17,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Inicio></Inicio>}> </Route>
           <Route path='/personaje/:id' element={<Personaje></Personaje>}> </Route>
-          <Route exact path="/docupdf" component={DocuPdf} />
+          <Route path='/pdf' element={<Pdf></Pdf>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
