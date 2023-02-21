@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { allpersonajes } from "../functions/funciones";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
-import { useNavigate } from 'react-router-dom';
-import PDFGenerador from "./PDFGenerador";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import Pdf from "./Pdf";
 
-
-//para utilizar esta funcion, con useEffect para cuando cargue el inicio cargue los personajes
-//usestate para mostrar en pantalla 
-const Inicio = ({ }) => {
+const Inicio = () => {
 
     const [personajes, setPersonajes] = useState(null);
 
@@ -15,56 +12,51 @@ const Inicio = ({ }) => {
         allpersonajes(setPersonajes);
     }, [])
 
-    const navigate = useNavigate();
-    const confirm = () => {
-        navigate('/pdf');
-    }
-
     return (
         <div className="contenedor">
-            {/* <div>
-                <h1>Tabla de datos</h1>
-                <PDFGenerador data={data} />
-            </div> */}
-            <br />
-            <div align="center">
-                <button onClick={confirm} className="btn btn-danger" >Descargar PDF</button>
+            <div className="content">
+                <br />
+                <div align="center">
+                    <ReactHTMLTableToExcel
+                        id="botonExportarExcel"
+                        className="btn btn-warning mb-3"
+                        table="api"
+                        filename="futuraExcel"
+                        sheet="futuraExcel"
+                        buttonText="Exportar Excel"
+                    />
+                    <table className="table table-striped table-bordered table-hover table-dark" id="api">
+                        <thead>
+                            <tr>
+                                <th >ID</th>
+                                <th>NOMBRE</th>
+                                <th>FECHA</th>
+                                <th>EPISODIO</th>
+                                <th class="col-sm-6">PERSONAJES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {personajes != null ? (
+                                personajes.map((personaje) => (
+                                    <tr>
+                                        <th href="!#"><a href={`/personaje/${personaje.id}`}>{personaje.id}</a></th>
+                                        <th>{personaje.name}</th>
+                                        <th>{personaje.air_date}</th>
+                                        <th>{personaje.episode}</th>
+                                        <th>{personaje.characters}</th>
+                                    </tr>
+                                ))
+                            ) : ('Cargando...')}
+                        </tbody>
+                    </table >
+                </div >
+                <div className="pdf" align="center">
+                    <PDFDownloadLink className="btn btn-danger" document={<Pdf />} fileName="Personajes.pdf">
+                        Descargar PDF
+                    </PDFDownloadLink>
+                </div>
+                <br />
             </div>
-            <br />
-            <div align="center">
-                <ReactHTMLTableToExcel
-                    id="botonExportarExcel"
-                    className="btn btn-success mb-3"
-                    table="api"
-                    filename="futuraExcel"
-                    sheet="futuraExcel"
-                    buttonText="Exportar Excel"
-                />
-                <table className="table table-striped table-bordered table-hover table-dark" id="api">
-                    <thead>
-                        <tr>
-                            <th className="th-lg"><a href="!#" >ID</a></th>
-                            <th className="th-lg"><a href="!#">Nombre</a></th>
-                            <th className="th-lg"><a href="!#">Fecha</a></th>
-                            <th className="th-lg"><a href="!#">Episodio</a></th>
-                            <th className="th-lg"><a href="!#">Personajes</a></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {personajes != null ? (
-                            personajes.map((personaje) => (
-                                <tr>
-                                    <th href="!#" ><a href={`/personaje/${personaje.id}`}>{personaje.id}</a></th>
-                                    <th href="!#">{personaje.name}</th>
-                                    <th href="!#">{personaje.air_date}</th>
-                                    <th href="!#">{personaje.episode}</th>
-                                    <th href="!#">{personaje.characters}</th>
-                                </tr>
-                            ))
-                        ) : ('no hay personajes')}
-                    </tbody>
-                </table >
-            </div >
         </div>
     )
 }

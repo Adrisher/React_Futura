@@ -15,10 +15,10 @@ const Personaje = () => {
             {personajes != null ? (
                 <div>
                     <h2> ID del personaje {personajes.id}</h2>
-                    <p> Nombre: {personajes.name}</p>
-                    <p> Fecha: {personajes.air_date}</p>
-                    <p> Episodio: {personajes.episode}</p>
-                    <p> Personajes: {personajes.characters}</p>
+                    <h3> Nombre: {personajes.name}</h3>
+                    <h3> Fecha: {personajes.air_date}</h3>
+                    <h3> Episodio: {personajes.episode}</h3>
+                    <h3> Personajes: {personajes.characters}</h3>
                 </div>
             ) : ('no hay personajes')}
         </>
